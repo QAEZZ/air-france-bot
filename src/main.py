@@ -164,7 +164,7 @@ async def reload(ctx, extension):
 @client.command()
 @commands.check(checkID)
 async def kill(ctx):
-    await ctx.reply("``Bot Dead, Restart Requested.`` \n ||<@755115465038233630>||")
+    await ctx.reply("``Bot Dead`` \n ||<@755115465038233630>||")
     print(f'-------KILLED by, {ctx.author}-------')
     exit()
 
