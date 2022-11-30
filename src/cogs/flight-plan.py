@@ -32,6 +32,7 @@ class updateSquawkModal(ui.Modal, title="Update Squawk Code"):
 - updated -```"""
             fpembed.remove_field(index=3)
             fpembed.remove_footer()
+            fpembed.set_footer(text="If you're told to change your squawk code, make a new fp with that squawk code.")
             if str(self.squawk) == "7500":
                 embed: discord.Embed = discord.Embed(
                     title="🚨 HIJACKING IN PROGRESS 🚨",
@@ -91,11 +92,11 @@ class fpModal(ui.Modal, title="Flight Plan Dialog"):
 {self.route}```""", inline=True)
             fpembed.add_field(name="Squawk Code", value=f"""```py
 {self.squawk}```""", inline=True)
-            fpembed.set_footer(text="Time out to update the squawk code is 15 minutes")
+            fpembed.set_footer(text="Time out to update the squawk code is 25 minutes, after that you cannot update it.")
 
             update_squawk = Button(label="Update squawk code", style=discord.ButtonStyle.blurple)
 
-            view = View(timeout=900)
+            view = View(timeout=1500)
 
             update_squawk.callback = update_squawk_callback
 
