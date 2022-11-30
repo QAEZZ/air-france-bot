@@ -26,7 +26,8 @@ class atisModal(ui.Modal, title="Create ATIS Report Dialog"):
             embed: discord.Embed = discord.Embed(
                 title=f"Information {self.phonetic_alpha} for {self.airport_code}.\n<t:{int(time.time())}:f> local",
                 color=discord.Color.from_rgb(47, 49, 54),
-                description=f"```{self.atis_information}```"
+                description=f"""```fix
+{self.atis_information}```"""
             )
             await interaction.response.send_message(embed=embed)
         
@@ -98,6 +99,30 @@ class ATIS(commands.Cog):
 
                 msg = await ctx.reply(view=view)
             
+            except Exception as e:
+                print(e)
+
+        if self.airport.lower() == "example":
+            try:
+
+                embed: discord.Embed = discord.Embed(
+                    title=f"Information {get_code().capitalize()} for EXAMPLE AIRPORT",
+                    color=self.eColor,
+                    description="""```fix
+GREATER ROCKFORD INFORMATION SIERRA.
+WEATHER MEASURED CEILING TEN THOUSAND PARTLY CLOUDY.
+VISIBILITY SIX NAUTICAL MILES, CLEAR.
+TEMPERATURE SIX EIGHT. DEWPOINT FOUR THREE.
+WIND THREE FIVE ZERO AT EIGHT.
+ALTIMETER TWO NINER NINER TWO.
+ILS RUNWAY THREE SIX RIGHT APPROACH IN USE.
+LANDING RUNWAY THREE SIX RIGHT AND LEFT, DEPARTURE RUNWAY THREE SIX RIGHT AND LEFT.
+CAUTION TERRAIN ON APPROACH PLATE.
+
+ADVISE YOU HAVE INFORMATION SIERRA.```"""
+                )
+
+                await ctx.reply(embed=embed)
             except Exception as e:
                 print(e)
 
