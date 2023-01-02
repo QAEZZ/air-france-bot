@@ -54,7 +54,9 @@ class scheduleModal(ui.Modal, title="Flight Schedule Dialog"):
     
     async def on_submit(self, interaction: discord.Interaction):
         try:
-
+            with open("./data/active_flights.txt", "a") as f:
+                f.write(f"{str(self.flight_number)}\n")
+                f.close()
             embed: discord.Embed = discord.Embed(
                 title=f"Flight AF {self.flight_number}", color=discord.Color.from_rgb(47, 49, 54),
                 description=f"""
@@ -67,7 +69,7 @@ class scheduleModal(ui.Modal, title="Flight Schedule Dialog"):
     ``{self.arriving_airport}``
 
 **Departing at**
-    ``{self.departing_time} Zulu (UTC)``"""
+    ``{self.departing_date} Zulu (UTC)``"""
             )
             embed.set_footer(text="Crew will be manually assigned and sent seperately")
             await interaction.response.send_message(embed=embed)
@@ -152,6 +154,22 @@ class Schedule(commands.Cog):
         view.add_item(test_schedule_button)
 
         msg = await ctx.reply(view=view)
+    
+    @commands.command()
+    async def active(self, ctx, reset="MISSING"):
+        if reset == "reset":
+            with open("./data/active_flights.txt", "w") as f:
+                f.write("")
+                f.close()
+                await ctx.reply("**Cleared all active flights**")
+
+        else:
+            with open("./data/active_flights.txt", "r") as f:
+                embed: discord.Embed = discord.Embed(
+                    title="Active Flights", description=f.read(), color=discord.Color.from_rgb(47, 49, 54)
+                )
+                f.close()
+                await ctx.reply(embed=embed)
     
     @commands.command()
     async def post(self, ctx):
