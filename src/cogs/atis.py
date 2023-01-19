@@ -2,6 +2,8 @@ import datetime
 import random
 import discord
 import time
+import json
+from pathlib import Path
 
 from discord import ui
 from discord.ext import commands
@@ -11,7 +13,7 @@ from discord.ui import View, Button
 class atisModal(ui.Modal, title="Create ATIS Report Dialog"):
     try:
         phonetic_alpha = ui.TextInput(label="Phonetic Alpha", style=discord.TextStyle.short,
-                                placeholder="Ex. Alpha, Bravo, Charlia, Etc.", required=True)
+                                placeholder="Ex. Alpha, Bravo, Charlie, Etc.", required=True)
         airport_code = ui.TextInput(label="Airport ICAO Code", style=discord.TextStyle.short,
                                 placeholder="Ex. IFRD, IPPH, Etc.", required=True)
         atis_information = ui.TextInput(label="ATIS Information", style=discord.TextStyle.long,
@@ -29,6 +31,18 @@ class atisModal(ui.Modal, title="Create ATIS Report Dialog"):
                 description=f"""```fix
 {self.atis_information}```"""
             )
+            file = Path(f"./atis/{self.airport_code} - Information {self.phonetic_alpha}.json")
+            file.touch(exist_ok=True)
+            atis_file = open(f"./atis/{self.airport_code} - Information {self.phonetic_alpha}.json")
+            atis_dict = {
+                "phonetic_alpha": self.phonetic_alpha,
+                "airport_code": self.airport_code,
+                "atis_information": self.atis_information
+            }
+            to_write = json.loads(atis_dict)
+            atis_file.write(to_write)
+            atis_file.close()
+
             await interaction.response.send_message(embed=embed)
         
         except Exception as e:

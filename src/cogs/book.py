@@ -30,7 +30,7 @@ class Book(commands.Cog):
                     if class_ == "NONE":
                         await ctx.reply(f"Unable to book a flight for AF {flnum}. You do not have a class role.")
                     else:
-                        with open("./data/roster/")
+                        # with open("./data/roster/")
                         await ctx.reply(f"Booked {class_} flight for AF {flnum}")
                 else:
                     await ctx.reply(f"That flight number does not exist!")

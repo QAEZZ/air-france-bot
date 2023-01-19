@@ -205,8 +205,7 @@ async def on_command_error(ctx, error):
 
 
 async def main():
-    with open("./keys/botToken.key", "r") as f:
-        TOKEN = f.read()
+    TOKEN = ""
 
     await client.start(TOKEN)
 
